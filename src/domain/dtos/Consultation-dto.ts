@@ -1,9 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDate, IsEmail, IsNotEmpty, IsString } from 'class-validator';
-import { BodyBiotype } from '../models/Consultation';
+import { IsDate, IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
+import { BodyBiotype, Consultation } from '../models/Consultation';
 import { Nutritionist } from '../models/Nutritionist';
+import { Transform } from 'class-transformer';
 
-export class ConsultationDto {
+export class ConsultationDto implements Consultation {
   @ApiProperty({
     type: 'string',
     description: 'Patient Name',
@@ -27,12 +28,14 @@ export class ConsultationDto {
   })
   @IsString()
   @IsNotEmpty()
+  @Length(11)
   phone: string;
 
   @ApiProperty({
     description: 'Patient Birth Date',
   })
   @IsDate()
+  @Transform(({ value }) => new Date(value))
   @IsNotEmpty()
   birth_date: Date;
 
@@ -42,6 +45,7 @@ export class ConsultationDto {
   })
   @IsString()
   @IsNotEmpty()
+  @Length(11)
   cpf: string;
 
   @ApiProperty({
@@ -55,6 +59,7 @@ export class ConsultationDto {
     description: 'When consultation start',
   })
   @IsDate()
+  @Transform(({ value }) => new Date(value))
   @IsNotEmpty()
   start_at: Date;
 
@@ -62,6 +67,7 @@ export class ConsultationDto {
     description: 'When consultation end',
   })
   @IsDate()
+  @Transform(({ value }) => new Date(value))
   @IsNotEmpty()
   end_at: Date;
 
