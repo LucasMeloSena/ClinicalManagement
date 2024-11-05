@@ -1,59 +1,22 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDate, IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
-import { BodyBiotype, Consultation } from '../models/Consultation';
+import { IsDate, IsNotEmpty } from 'class-validator';
+import { Consultation } from '../models/Consultation';
 import { Nutritionist } from '../models/Nutritionist';
 import { Transform } from 'class-transformer';
+import { Client } from '../models/Client';
 
 export class ConsultationDto implements Consultation {
   @ApiProperty({
-    type: 'string',
-    description: 'Patient Name',
+    description: 'The client that will be attended',
   })
-  @IsString()
   @IsNotEmpty()
-  patient: string;
+  client: Client;
 
   @ApiProperty({
-    type: 'string',
-    description: 'Patient Email',
-  })
-  @IsString()
-  @IsEmail()
-  @IsNotEmpty()
-  email: string;
-
-  @ApiProperty({
-    type: 'string',
-    description: 'Patient Phone',
-  })
-  @IsString()
-  @IsNotEmpty()
-  @Length(11)
-  phone: string;
-
-  @ApiProperty({
-    description: 'Patient Birth Date',
-  })
-  @IsDate()
-  @Transform(({ value }) => new Date(value))
-  @IsNotEmpty()
-  birth_date: Date;
-
-  @ApiProperty({
-    type: 'string',
-    description: 'Patient CPF',
-  })
-  @IsString()
-  @IsNotEmpty()
-  @Length(11)
-  cpf: string;
-
-  @ApiProperty({
-    description: 'Patient Body Biotype',
+    description: 'The nutritionist that will guide consultation',
   })
   @IsNotEmpty()
-  @IsString()
-  body_biotype: BodyBiotype;
+  nutritionist: Nutritionist;
 
   @ApiProperty({
     description: 'When consultation start',
@@ -70,10 +33,4 @@ export class ConsultationDto implements Consultation {
   @Transform(({ value }) => new Date(value))
   @IsNotEmpty()
   end_at: Date;
-
-  @ApiProperty({
-    description: 'The nutritionist that will guide consultation',
-  })
-  @IsNotEmpty()
-  nutritionist: Nutritionist;
 }
