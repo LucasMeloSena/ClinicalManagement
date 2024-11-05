@@ -1,6 +1,18 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 import { Nutritionist } from './Nutritionist';
+
+export class Consultation {
+  patient: string;
+  email: string;
+  phone: string;
+  birth_date: Date;
+  cpf: string;
+  body_biotype: BodyBiotype;
+  start_at: Date;
+  end_at: Date;
+  nutritionist: Nutritionist | Types.ObjectId;
+}
 
 export enum BodyBiotype {
   Ectomorfo = 'Ectomorfo',
@@ -8,8 +20,10 @@ export enum BodyBiotype {
   Endomorfo = 'Endomorfo',
 }
 
-@Schema({ timestamps: true })
-export class Consultation extends Document {
+export type ConsultationDocument = HydratedDocument<ConsultationSchema>;
+
+@Schema({ collection: 'consultations', timestamps: true })
+export class ConsultationSchema implements Consultation {
   @Prop({ required: true })
   patient: string;
 
@@ -36,12 +50,7 @@ export class Consultation extends Document {
 
   @Prop({ type: Types.ObjectId, ref: 'Nutritionist' })
   nutritionist: Nutritionist | Types.ObjectId;
-
-  @Prop({ default: Date.now })
-  created_at: Date;
-
-  @Prop({ default: Date.now })
-  updated_at: Date;
 }
 
-export const ConsultationSchema = SchemaFactory.createForClass(Consultation);
+export const ConsultationSchemaFactory =
+  SchemaFactory.createForClass(ConsultationSchema);
