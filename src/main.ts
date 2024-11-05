@@ -2,6 +2,8 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
+import { SeedModule } from './modules/seed.module';
+import { Seed } from './infrastructure/database/seed';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -38,6 +40,8 @@ async function bootstrap() {
       transform: true,
     }),
   );
+
+  app.select(SeedModule).get(Seed).exec();
 
   await app.listen(port, host);
   console.log(`Application is running on: http://${host}:${port}`);
