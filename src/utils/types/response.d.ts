@@ -1,6 +1,7 @@
-type Response<T> = {
+type HttpResponse<T> = {
   data: T;
-  limit: number;
-  page: number;
+  message: string;
+  limit?: number;
+  page?: number;
   count?: number;
 };
