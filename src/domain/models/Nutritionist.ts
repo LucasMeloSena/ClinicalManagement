@@ -1,8 +1,16 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { HydratedDocument } from 'mongoose';
 
-@Schema({ timestamps: true })
-export class Nutritionist extends Document {
+export class Nutritionist {
+  name: string;
+  email: string;
+  password: string;
+}
+
+export type NutritionistDocument = HydratedDocument<NutritionistSchema>;
+
+@Schema({ collection: 'nutritionists', timestamps: true })
+export class NutritionistSchema implements Nutritionist {
   @Prop({ required: true })
   name: string;
 
@@ -13,4 +21,5 @@ export class Nutritionist extends Document {
   password: string;
 }
 
-export const NutritionistSchema = SchemaFactory.createForClass(Nutritionist);
+export const NutritionistSchemaFactory =
+  SchemaFactory.createForClass(NutritionistSchema);
