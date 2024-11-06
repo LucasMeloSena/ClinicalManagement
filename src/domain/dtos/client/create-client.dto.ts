@@ -1,9 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsDate, IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
 import { Transform } from 'class-transformer';
-import { BodyBiotype, Client } from '../models/Client';
+import { BodyBiotype, Client } from 'src/domain/models/Client';
 
-export class ClientDto implements Client {
+
+export class CreateClientDto implements Client {
   @ApiProperty({
     type: 'string',
     description: 'Patient Name',

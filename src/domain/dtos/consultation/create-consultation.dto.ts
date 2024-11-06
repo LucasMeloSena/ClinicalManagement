@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsDate, IsNotEmpty } from 'class-validator';
-import { Consultation } from '../models/Consultation';
+import { Consultation } from '../../models/Consultation';
 import { Transform } from 'class-transformer';
 
-export class ConsultationDto implements Consultation {
+export class CreateConsultationDto implements Consultation {
   @ApiProperty({
     description: 'The client that will be attended',
   })
