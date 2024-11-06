@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConsultationModule } from './modules/consultation.module';
 import { ConfigModule } from '@nestjs/config';
 import { SeedModule } from './modules/seed.module';
+import { ClientModule } from './modules/client.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { SeedModule } from './modules/seed.module';
     MongooseModule.forRoot(`${process.env.DATABASE_URL}`),
     SeedModule,
     ConsultationModule,
+    ClientModule
   ],
   controllers: [AppController],
   providers: [AppService],
