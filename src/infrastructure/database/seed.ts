@@ -1,6 +1,5 @@
 import { Command } from 'nestjs-command';
 import { Injectable } from '@nestjs/common';
-import { HashProvider } from '../encryption';
 import { InjectModel } from '@nestjs/mongoose';
 import {
   Nutritionist,
@@ -8,6 +7,7 @@ import {
 } from 'src/domain/models/Nutritionist';
 import { Model } from 'mongoose';
 import { ConsultationSchema } from 'src/domain/models/Consultation';
+import { HashProvider } from 'src/utils/encryption';
 
 @Injectable()
 export class Seed {

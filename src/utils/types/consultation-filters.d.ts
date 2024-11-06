@@ -1,6 +1,6 @@
 type ConsultationFilters = {
-  patient?: string;
-  nutritionist?: string;
+  clientId?: string;
+  nutritionistId?: string;
   page?: number;
   limit?: number;
 };

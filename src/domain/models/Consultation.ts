@@ -4,8 +4,8 @@ import { Nutritionist } from './Nutritionist';
 import { Client } from './Client';
 
 export class Consultation {
-  client: Client | Types.ObjectId;
-  nutritionist: Nutritionist | Types.ObjectId;
+  clientId: Client | Types.ObjectId | string;
+  nutritionistId: Nutritionist | Types.ObjectId | string;
   start_at: Date;
   end_at: Date;
 }
@@ -15,10 +15,10 @@ export type ConsultationDocument = HydratedDocument<ConsultationSchema>;
 @Schema({ collection: 'consultations', timestamps: true })
 export class ConsultationSchema implements Consultation {
   @Prop({ type: Types.ObjectId, ref: 'Client' })
-  client: Client | Types.ObjectId;
+  clientId: Client | Types.ObjectId | string;
 
   @Prop({ type: Types.ObjectId, ref: 'Nutritionist' })
-  nutritionist: Nutritionist | Types.ObjectId;
+  nutritionistId: Nutritionist | Types.ObjectId | string;
 
   @Prop({ required: true })
   start_at: Date;

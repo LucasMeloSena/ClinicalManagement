@@ -10,7 +10,7 @@ import {
   NutritionistSchemaFactory,
 } from 'src/domain/models/Nutritionist';
 import { Seed } from 'src/infrastructure/database/seed';
-import { HashProvider } from 'src/infrastructure/encryption';
+import { HashProvider } from 'src/utils/encryption';
 
 @Module({
   imports: [
