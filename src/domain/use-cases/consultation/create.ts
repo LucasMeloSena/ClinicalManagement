@@ -1,5 +1,5 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
-import { ConsultationDto } from 'src/domain/dtos/Consultation-dto';
+import { CreateConsultationDto } from 'src/domain/dtos/consultation/create-consultation.dto';
 import { IConsultationRepository } from 'src/domain/interfaces/consultation.repository';
 import { DateProvider } from 'src/utils/dates';
 
@@ -11,7 +11,7 @@ export class CreateConsultation {
     private readonly dateProvider: DateProvider,
   ) {}
 
-  async execute(consultation: ConsultationDto) {
+  async execute(consultation: CreateConsultationDto) {
     const isInvalidTime =
       this.dateProvider.blockCreateANewConsultationBeforeToday(
         consultation.start_at,
