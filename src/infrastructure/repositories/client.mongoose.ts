@@ -12,6 +12,35 @@ export class MongooseClientRepository implements IClientRepository {
         @InjectModel(ClientSchema.name)
         private clientModel: Model<ClientSchema>,
     ) {}
+  
+  async findById(id: string): Promise<Client> {
+    try {
+      const client = await this.clientModel.findById<ClientDocument>(id)
+      return client
+    } catch (error) {
+      throw new InternalServerErrorException(`Error retrieving client with ${id}`)
+    }
+  }
+
+    async findAll(filters: ClientFilters): Promise<Client[]> {
+      try {
+          const { name, email, phone, cpf, page, limit } = filters;
+          const filtersNonNull: ClientFilters = {};
+          if (name) filtersNonNull.name = name;
+          if (email) filtersNonNull.email = email;
+          if (phone) filtersNonNull.phone = phone;
+          if (cpf) filtersNonNull.cpf = cpf;
+    
+          const clients = await this.clientModel
+            .find<ClientDocument>(filtersNonNull)
+            .skip((page - 1) * limit)
+            .limit(limit);
+    
+          return clients;
+      } catch (error) {
+          throw new InternalServerErrorException('Error retrieving clients');
+      }
+  }
 
     async create(clientDto: CreateClientDto): Promise<Client> {
         try {
@@ -22,26 +51,6 @@ export class MongooseClientRepository implements IClientRepository {
             return createdClient;
           } catch (error) {
             throw new InternalServerErrorException('Error creating client.');
-        }
-    }
-    
-    async findAll(filters: ClientFilters): Promise<Client[]> {
-        try {
-            const { name, email, phone, cpf, page, limit } = filters;
-            const filtersNonNull: ClientFilters = {};
-            if (name) filtersNonNull.name = name;
-            if (email) filtersNonNull.email = email;
-            if (phone) filtersNonNull.phone = phone;
-            if (cpf) filtersNonNull.cpf = cpf;
-      
-            const clients = await this.clientModel
-              .find<ClientDocument>(filtersNonNull)
-              .skip((page - 1) * limit)
-              .limit(limit);
-      
-            return clients;
-        } catch (error) {
-            throw new InternalServerErrorException('Error retrieving clients');
         }
     }
 
@@ -56,5 +65,13 @@ export class MongooseClientRepository implements IClientRepository {
       } catch (error) {
         throw new InternalServerErrorException('Error updating client.');
     }
+    }
+
+    async delete(id: string): Promise<void> {
+      try {
+        await this.clientModel.findByIdAndDelete<ClientDocument>(id)
+      } catch (error) {
+        throw new InternalServerErrorException("Error deleting client.")
+      }
     }
 }
