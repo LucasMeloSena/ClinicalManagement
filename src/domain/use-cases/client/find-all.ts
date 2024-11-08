@@ -1,19 +1,19 @@
-import { Inject, Injectable } from "@nestjs/common";
-import { IClientRepository } from "src/domain/interfaces/client.repository";
-import { Client } from "src/domain/models/Client";
-import { PaginationDefaultsEnum } from "src/utils/enums/pagination-default.enum";
+import { Inject, Injectable } from '@nestjs/common';
+import { IClientRepository } from 'src/domain/interfaces/client.repository';
+import { Client } from 'src/domain/models/Client';
+import { PaginationDefaultsEnum } from 'src/utils/enums/pagination-default.enum';
 
-@Injectable() 
+@Injectable()
 export class FindAllClients {
-    constructor(
-        @Inject('IClientRepository')
-        private readonly clientRepository: IClientRepository
-    ) {}
+  constructor(
+    @Inject('IClientRepository')
+    private readonly clientRepository: IClientRepository,
+  ) {}
 
-    async execute(filters: ClientFilters): Promise<Client[]> {
-        filters.page = filters.page || PaginationDefaultsEnum.PAGE;
-        filters.limit = filters.limit || PaginationDefaultsEnum.LIMIT;
-        const clients = await this.clientRepository.findAll(filters);
-        return clients;
-    }
+  async execute(filters: ClientFilters): Promise<Client[]> {
+    filters.page = filters.page || PaginationDefaultsEnum.PAGE;
+    filters.limit = filters.limit || PaginationDefaultsEnum.LIMIT;
+    const clients = await this.clientRepository.findAll(filters);
+    return clients;
+  }
 }
