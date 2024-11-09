@@ -3,7 +3,6 @@ import { IsDate, IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { BodyBiotype, Client } from 'src/domain/models/Client';
 
-
 export class CreateClientDto implements Client {
   @ApiProperty({
     type: 'string',

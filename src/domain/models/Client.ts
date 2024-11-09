@@ -37,6 +37,9 @@ export class ClientSchema implements Client {
 
   @Prop({ required: true, enum: BodyBiotype })
   body_biotype: BodyBiotype;
+
+  @Prop()
+  deleted_at?: Date;
 }
 
 export const ClientSchemaFactory = SchemaFactory.createForClass(ClientSchema);

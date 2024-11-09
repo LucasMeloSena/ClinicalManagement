@@ -22,7 +22,6 @@ export class MongooseNutritionistRepository implements INutritionistRepository {
     try {
       const nutritionist = await this.nutritionistModel.findById(id);
 
-      console.log(nutritionist);
       if (!nutritionist) {
         throw new BadRequestException(`Nutritionist with ${id} wasn't found.`);
       }
@@ -31,6 +30,26 @@ export class MongooseNutritionistRepository implements INutritionistRepository {
     } catch (error) {
       throw new InternalServerErrorException(
         'Error searching nutritionist by id.',
+      );
+    }
+  }
+
+  async findByEmail(email: string): Promise<Nutritionist> {
+    try {
+      const nutritionist = await this.nutritionistModel.findOne({
+        email,
+      });
+
+      if (!nutritionist) {
+        throw new BadRequestException(
+          `Nutritionist with ${email} wasn't found.`,
+        );
+      }
+
+      return nutritionist;
+    } catch (error) {
+      throw new InternalServerErrorException(
+        'Error searching nutritionist by email.',
       );
     }
   }

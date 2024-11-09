@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { ConsultationDto } from 'src/domain/dtos/Consultation-dto';
+import { CreateConsultationDto } from 'src/domain/dtos/consultation/create-consultation.dto';
 import { ConsultationSchema } from 'src/domain/models/Consultation';
 import { CreateConsultation } from 'src/domain/use-cases/consultation/create';
 
@@ -17,7 +17,7 @@ export class ConsultationController {
   })
   @ApiResponse({ status: 400, description: 'Bad request.' })
   async createConsultation(
-    @Body() createConsultationDto: ConsultationDto,
+    @Body() createConsultationDto: CreateConsultationDto,
   ): Promise<HttpResponse<ConsultationSchema>> {
     const createdDepartment = await this.create.execute(createConsultationDto);
     return {

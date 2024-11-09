@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
 export class Nutritionist {
+  _id?: string;
   name: string;
   email: string;
   password: string;
@@ -19,6 +20,8 @@ export class NutritionistSchema implements Nutritionist {
 
   @Prop({ required: true })
   password: string;
+
+  _id?: string;
 }
 
 export const NutritionistSchemaFactory =
