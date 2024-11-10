@@ -1,4 +1,9 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { CreateConsultationDto } from 'src/domain/dtos/consultation/create-consultation.dto';
 import { IConsultationRepository } from 'src/domain/interfaces/consultation.repository';
 import { DateProvider } from 'src/utils/dates';
@@ -12,13 +17,14 @@ export class CreateConsultation {
   ) {}
 
   async execute(consultation: CreateConsultationDto) {
-    const isInvalidTime =
-      this.dateProvider.blockCreateANewConsultationBeforeToday(
-        consultation.start_at,
-        consultation.end_at,
-      );
+    const isInvalidTime = this.dateProvider.blockDateBeforeToday(
+      consultation.startAt,
+      consultation.endAt,
+    );
     if (isInvalidTime)
-      throw new BadRequestException('The provided dates are before today.');
+      throw new UnprocessableEntityException(
+        'The provided dates are before today.',
+      );
 
     const consultationsByClient = await this.consultationRepository.findAll({
       clientId: consultation.clientId,
@@ -31,15 +37,15 @@ export class CreateConsultation {
     const isInvalidNutricionistTime =
       this.dateProvider.verifyIfUserAlreadyHasAConsultation(
         consultationsByNutritionist,
-        consultation.start_at,
-        consultation.end_at,
+        consultation.startAt,
+        consultation.endAt,
       );
 
     const isInvalidClientTime =
       this.dateProvider.verifyIfUserAlreadyHasAConsultation(
         consultationsByClient,
-        consultation.start_at,
-        consultation.end_at,
+        consultation.startAt,
+        consultation.endAt,
       );
 
     if (isInvalidNutricionistTime) {

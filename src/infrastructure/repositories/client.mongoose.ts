@@ -26,20 +26,17 @@ export class MongooseClientRepository implements IClientRepository {
 
   async findAll(filters: ClientFilters): Promise<Client[]> {
     try {
-      const { name, email, phone, cpf, deleted_at, page, limit } = filters;
+      const { name, email, phone, cpf, deleted_at } = filters;
       const filtersNonNull: ClientFilters = {};
       if (name) filtersNonNull.name = name;
       if (email) filtersNonNull.email = email;
       if (phone) filtersNonNull.phone = phone;
       if (cpf) filtersNonNull.cpf = cpf;
 
-      const clients = await this.clientModel
-        .find<ClientDocument>({
-          ...filtersNonNull,
-          deleted_at: deleted_at ? deleted_at : undefined,
-        })
-        .skip((page - 1) * limit)
-        .limit(limit);
+      const clients = await this.clientModel.find<ClientDocument>({
+        ...filtersNonNull,
+        deleted_at: deleted_at ? deleted_at : undefined,
+      });
 
       return clients;
     } catch (error) {

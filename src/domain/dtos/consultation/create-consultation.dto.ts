@@ -22,7 +22,7 @@ export class CreateConsultationDto implements Consultation {
   @IsDate()
   @Transform(({ value }) => new Date(value))
   @IsNotEmpty()
-  start_at: Date;
+  startAt: Date;
 
   @ApiProperty({
     description: 'When consultation end',
@@ -30,5 +30,5 @@ export class CreateConsultationDto implements Consultation {
   @IsDate()
   @Transform(({ value }) => new Date(value))
   @IsNotEmpty()
-  end_at: Date;
+  endAt: Date;
 }

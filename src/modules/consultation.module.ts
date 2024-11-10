@@ -9,9 +9,10 @@ import { CreateConsultation } from 'src/domain/use-cases/consultation/create';
 import { MongooseConsultationRepository } from 'src/infrastructure/repositories/consultation.mongoose';
 import { FindAllConsultations } from 'src/domain/use-cases/consultation/find-all';
 import { DateProvider } from 'src/utils/dates';
+import { ConsultationController } from 'src/controllers/consultation';
 
 @Module({
-  controllers: [],
+  controllers: [ConsultationController],
   imports: [
     MongooseModule.forFeature([
       { name: ConsultationSchema.name, schema: ConsultationSchemaFactory },

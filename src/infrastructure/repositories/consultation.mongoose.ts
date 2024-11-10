@@ -15,17 +15,16 @@ export class MongooseConsultationRepository implements IConsultationRepository {
     @InjectModel(ConsultationSchema.name)
     private consultationModel: Model<ConsultationSchema>,
   ) {}
+
   async findAll(filters: ConsultationFilters): Promise<Consultation[]> {
     try {
-      const { clientId, nutritionistId, page, limit } = filters;
+      const { clientId, nutritionistId } = filters;
       const filtersNonNull: ConsultationFilters = {};
       if (clientId) filtersNonNull.clientId = clientId;
       if (nutritionistId) filtersNonNull.nutritionistId = nutritionistId;
 
-      const consultations = await this.consultationModel
-        .find<ConsultationDocument>(filtersNonNull)
-        .skip((page - 1) * limit)
-        .limit(limit);
+      const consultations =
+        await this.consultationModel.find<ConsultationDocument>(filtersNonNull);
 
       return consultations;
     } catch (error) {
@@ -43,6 +42,7 @@ export class MongooseConsultationRepository implements IConsultationRepository {
         );
       return createdConsultation;
     } catch (error) {
+      console.log((error as Error).message);
       throw new InternalServerErrorException('Error creating consultation.');
     }
   }

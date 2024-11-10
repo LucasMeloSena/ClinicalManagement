@@ -1,11 +1,11 @@
-import * as dayjs from 'dayjs';
 import { Consultation } from 'src/domain/models/Consultation';
+import * as dayjs from 'dayjs';
 
 export class DateProvider {
-  blockCreateANewConsultationBeforeToday(start_at: Date, end_at: Date) {
-    const new_start_at = dayjs(start_at);
-    const new_end_at = dayjs(end_at);
-    const today = dayjs(new Date());
+  blockDateBeforeToday(start_at: Date, end_at: Date) {
+    const new_start_at = dayjs(this.convertDateToLocal(start_at));
+    const new_end_at = dayjs(this.convertDateToLocal(end_at));
+    const today = dayjs(this.convertDateToLocal(new Date()));
 
     return new_start_at.isBefore(today) || new_end_at.isBefore(new_start_at);
   }
@@ -17,13 +17,13 @@ export class DateProvider {
   ) {
     const foundConsultationsConflicts = consultationsByNutritionist.filter(
       (consultation) => {
-        const existing_start_at = dayjs(consultation.start_at);
-        const existing_end_at = dayjs(consultation.end_at);
-        const new_start_at = dayjs(start_at);
-        const new_end_at = dayjs(end_at);
+        const existingStartAt = dayjs(consultation.startAt);
+        const existingEndAt = dayjs(consultation.endAt);
+        const newStartAt = dayjs(start_at);
+        const newEndAt = dayjs(end_at);
         const isInvalidDate =
-          new_start_at.isBefore(existing_end_at) &&
-          new_end_at.isAfter(existing_start_at);
+          newStartAt.isBefore(existingEndAt) &&
+          newEndAt.isAfter(existingStartAt);
 
         return isInvalidDate;
       },
@@ -31,5 +31,9 @@ export class DateProvider {
 
     if (foundConsultationsConflicts.length > 0) return true;
     else return false;
+  }
+
+  convertDateToLocal(date: Date) {
+    return new Date(date.getTime() - 3 * 60 * 60 * 1000);
   }
 }

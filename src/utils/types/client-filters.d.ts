@@ -3,7 +3,5 @@ type ClientFilters = {
   email?: string;
   phone?: string;
   cpf?: string;
-  deleted_at?: string;
-  page?: number;
-  limit?: number;
+  deleted_at?: Date;
 };

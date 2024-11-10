@@ -4,10 +4,11 @@ import { Nutritionist } from './Nutritionist';
 import { Client } from './Client';
 
 export class Consultation {
+  _id?: string;
   clientId: Client | Types.ObjectId | string;
   nutritionistId: Nutritionist | Types.ObjectId | string;
-  start_at: Date;
-  end_at: Date;
+  startAt: Date;
+  endAt: Date;
 }
 
 export type ConsultationDocument = HydratedDocument<ConsultationSchema>;
@@ -21,10 +22,12 @@ export class ConsultationSchema implements Consultation {
   nutritionistId: Nutritionist | Types.ObjectId | string;
 
   @Prop({ required: true })
-  start_at: Date;
+  startAt: Date;
 
   @Prop({ required: true })
-  end_at: Date;
+  endAt: Date;
+
+  _id?: string;
 }
 
 export const ConsultationSchemaFactory =

@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { LoginNutritionistDto } from 'src/domain/dtos/nutritionist/login-nutritionist.dto';
 import { Nutritionist } from 'src/domain/models/Nutritionist';
@@ -13,6 +13,7 @@ export class NutritionistController {
   @ApiOperation({ summary: 'Login Nutritionist' })
   @ApiResponse({ status: 200, description: 'Nutritionist successfully login.' })
   @ApiResponse({ status: 400, description: 'Bad request.' })
+  @HttpCode(200)
   async loginNutritionist(
     @Body() loginRequestDto: LoginNutritionistDto,
   ): Promise<

@@ -5,7 +5,7 @@ export class Nutritionist {
   _id?: string;
   name: string;
   email: string;
-  password: string;
+  password?: string;
 }
 
 export type NutritionistDocument = HydratedDocument<NutritionistSchema>;

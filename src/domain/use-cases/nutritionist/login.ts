@@ -22,6 +22,7 @@ export class LoginNutritionist {
       nutritionist.password,
     );
     if (validPass) {
+      nutritionist.password = undefined;
       return {
         nutritionist,
         token: this.authProvider.genToken(nutritionist.email, nutritionist._id),
