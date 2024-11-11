@@ -1,5 +1,11 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { UpdateClient } from '../domain/use-cases/client/update';
 import { CreateClient } from '../domain/use-cases/client/create';
 import { FindAllClients } from '../domain/use-cases/client/find-all';
@@ -16,6 +22,63 @@ export class ClientController {
     private readonly create: CreateClient,
     private readonly update: UpdateClient,
   ) {}
+
+  @Get()
+  @ApiOperation({ summary: 'Get all clients' })
+  @ApiResponse({
+    status: 200,
+    description: 'All clients retrieved successfully.',
+  })
+  @ApiQuery({
+    name: 'name',
+    description: 'The name of the client',
+    required: false,
+    type: String,
+  })
+  @ApiQuery({
+    name: 'email',
+    description: 'The email of the client',
+    required: false,
+    type: String,
+  })
+  @ApiQuery({
+    name: 'phone',
+    description: 'The phone of the client',
+    required: false,
+    type: String,
+  })
+  @ApiQuery({
+    name: 'cpf',
+    description: 'The cpf of the client',
+    required: false,
+    type: String,
+  })
+  @ApiQuery({
+    name: 'deleted_at',
+    description: 'The the deactivation date of the client',
+    required: false,
+    type: Date,
+  })
+  async getAll(
+    @Query('name') name?: string,
+    @Query('email') email?: string,
+    @Query('phone') phone?: string,
+    @Query('cpf') cpf?: string,
+    @Query('deleted_at') deletedAt?: Date,
+  ): Promise<HttpResponse<Client[]>> {
+    const filters: ClientFilters = {
+      name,
+      email,
+      phone,
+      cpf,
+      deleted_at: deletedAt,
+    };
+    const clients = await this.findAll.execute(filters);
+    return {
+      data: clients,
+      message: 'All clients retrieved successfully.',
+    };
+  }
 
   @Get(':id')
   @ApiOperation({ summary: 'Get client by id' })

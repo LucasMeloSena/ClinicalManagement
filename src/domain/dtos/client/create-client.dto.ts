@@ -36,7 +36,7 @@ export class CreateClientDto implements Client {
   @IsDate()
   @Transform(({ value }) => new Date(value))
   @IsNotEmpty()
-  birth_date: Date;
+  birthDate: Date;
 
   @ApiProperty({
     type: 'string',
@@ -52,5 +52,5 @@ export class CreateClientDto implements Client {
   })
   @IsNotEmpty()
   @IsString()
-  body_biotype: BodyBiotype;
+  bodyBiotype: BodyBiotype;
 }

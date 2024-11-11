@@ -2,12 +2,13 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
 export class Client {
+  _id?: string;
   name: string;
   email: string;
   phone: string;
-  birth_date: Date;
+  birthDate: Date;
   cpf: string;
-  body_biotype: BodyBiotype;
+  bodyBiotype: BodyBiotype;
 }
 
 export enum BodyBiotype {
@@ -30,16 +31,18 @@ export class ClientSchema implements Client {
   phone: string;
 
   @Prop({ required: true })
-  birth_date: Date;
+  birthDate: Date;
 
   @Prop({ required: true, unique: true, minlength: 11, maxlength: 11 })
   cpf: string;
 
   @Prop({ required: true, enum: BodyBiotype })
-  body_biotype: BodyBiotype;
+  bodyBiotype: BodyBiotype;
 
   @Prop()
   deleted_at?: Date;
+
+  _id?: string;
 }
 
 export const ClientSchemaFactory = SchemaFactory.createForClass(ClientSchema);

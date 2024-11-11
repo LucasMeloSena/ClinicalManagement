@@ -1,4 +1,4 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { ConflictException, Inject, Injectable } from '@nestjs/common';
 import { CreateClientDto } from 'src/domain/dtos/client/create-client.dto';
 import { IClientRepository } from 'src/domain/interfaces/client.repository';
 import { Client } from 'src/domain/models/Client';
@@ -17,7 +17,7 @@ export class CreateClient {
       cpf: client.cpf,
     });
     if (existingClients.length > 0) {
-      throw new BadRequestException(
+      throw new ConflictException(
         'Already exists a client with provided data.',
       );
     }
