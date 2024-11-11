@@ -8,13 +8,13 @@ export class CreateConsultationDto implements Consultation {
     description: 'The client that will be attended',
   })
   @IsNotEmpty()
-  clientId: string;
+  client: string;
 
   @ApiProperty({
     description: 'The nutritionist that will guide consultation',
   })
   @IsNotEmpty()
-  nutritionistId: string;
+  nutritionist: string;
 
   @ApiProperty({
     description: 'When consultation start',

@@ -1,4 +1,4 @@
 type ConsultationFilters = {
-  clientId?: string;
-  nutritionistId?: string;
+  client?: string;
+  nutritionist?: string;
 };

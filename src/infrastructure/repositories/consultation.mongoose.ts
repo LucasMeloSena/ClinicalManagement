@@ -1,6 +1,6 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { CreateConsultationDto } from 'src/domain/dtos/consultation/create-consultation.dto';
 import { IConsultationRepository } from 'src/domain/interfaces/consultation.repository';
 import {
@@ -16,16 +16,23 @@ export class MongooseConsultationRepository implements IConsultationRepository {
     private consultationModel: Model<ConsultationSchema>,
   ) {}
 
+  async findById(id: string): Promise<Consultation> {
+    try {
+      return this.consultationModel.findById<ConsultationDocument>(id).populate('client').populate('nutritionist')
+    } catch (error) {
+      throw new InternalServerErrorException(`Error retrieving consultation with id ${id}`)
+    }
+  }
+
   async findAll(filters: ConsultationFilters): Promise<Consultation[]> {
     try {
-      const { clientId, nutritionistId } = filters;
+      const { client, nutritionist } = filters;
       const filtersNonNull: ConsultationFilters = {};
-      if (clientId) filtersNonNull.clientId = clientId;
-      if (nutritionistId) filtersNonNull.nutritionistId = nutritionistId;
+      if (client) filtersNonNull.client = client;
+      if (nutritionist) filtersNonNull.nutritionist = nutritionist;
 
       const consultations =
-        await this.consultationModel.find<ConsultationDocument>(filtersNonNull);
-
+        await this.consultationModel.find<ConsultationDocument>(filtersNonNull).populate('client').populate('nutritionist').exec();
       return consultations;
     } catch (error) {
       throw new InternalServerErrorException('Error retrieving consultations');

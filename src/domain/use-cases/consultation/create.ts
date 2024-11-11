@@ -27,11 +27,11 @@ export class CreateConsultation {
       );
 
     const consultationsByClient = await this.consultationRepository.findAll({
-      clientId: consultation.clientId,
+      client: consultation.client,
     });
     const consultationsByNutritionist =
       await this.consultationRepository.findAll({
-        nutritionistId: consultation.nutritionistId,
+        nutritionist: consultation.nutritionist,
       });
 
     const isInvalidNutricionistTime =

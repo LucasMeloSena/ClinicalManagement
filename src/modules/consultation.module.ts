@@ -10,6 +10,7 @@ import { MongooseConsultationRepository } from 'src/infrastructure/repositories/
 import { FindAllConsultations } from 'src/domain/use-cases/consultation/find-all';
 import { DateProvider } from 'src/utils/dates';
 import { ConsultationController } from 'src/controllers/consultation';
+import { FindConsultationByid } from 'src/domain/use-cases/consultation/find-by-id';
 
 @Module({
   controllers: [ConsultationController],
@@ -25,6 +26,7 @@ import { ConsultationController } from 'src/controllers/consultation';
       useClass: MongooseConsultationRepository,
     },
     CreateConsultation,
+    FindConsultationByid,
     FindAllConsultations,
     DateProvider,
   ],
