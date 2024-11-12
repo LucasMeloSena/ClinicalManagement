@@ -12,6 +12,7 @@ import { HashProvider } from 'src/utils/encryption';
 import { JwtAuthToken, JwtProvider } from 'src/utils/jwt';
 import { ClientModule } from './client.module';
 import { LoginNutritionist } from 'src/domain/use-cases/nutritionist/login';
+import { FindAllNutritionists } from 'src/domain/use-cases/nutritionist/find-all';
 
 @Module({
   controllers: [NutritionistController],
@@ -37,6 +38,7 @@ import { LoginNutritionist } from 'src/domain/use-cases/nutritionist/login';
     JwtProvider,
     JwtAuthToken,
     LoginNutritionist,
+    FindAllNutritionists,
   ],
   exports: ['INutritionistRepository'],
 })

@@ -8,6 +8,7 @@ import { Model } from 'mongoose';
 import { INutritionistRepository } from 'src/domain/interfaces/nutritionist.repository';
 import {
   Nutritionist,
+  NutritionistDocument,
   NutritionistSchema,
 } from 'src/domain/models/Nutritionist';
 
@@ -51,6 +52,16 @@ export class MongooseNutritionistRepository implements INutritionistRepository {
       throw new InternalServerErrorException(
         'Error searching nutritionist by email.',
       );
+    }
+  }
+
+  async findAll(): Promise<Nutritionist[]> {
+    try {
+      const nutritionists =
+        await this.nutritionistModel.find<NutritionistDocument>();
+      return nutritionists;
+    } catch (error) {
+      throw new InternalServerErrorException('Error retrieving nutritionists');
     }
   }
 }

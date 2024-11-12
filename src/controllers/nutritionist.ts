@@ -1,13 +1,32 @@
-import { Body, Controller, HttpCode, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { LoginNutritionistDto } from 'src/domain/dtos/nutritionist/login-nutritionist.dto';
 import { Nutritionist } from 'src/domain/models/Nutritionist';
+import { FindAllNutritionists } from 'src/domain/use-cases/nutritionist/find-all';
 import { LoginNutritionist } from 'src/domain/use-cases/nutritionist/login';
 
 @ApiTags('nutritionist')
 @Controller('nutritionist')
 export class NutritionistController {
-  constructor(private readonly login: LoginNutritionist) {}
+  constructor(
+    private readonly login: LoginNutritionist,
+    private readonly findAll: FindAllNutritionists,
+  ) {}
+
+  @Get()
+  @ApiOperation({ summary: 'Find All Nutritionists' })
+  @ApiResponse({
+    status: 200,
+    description: 'All nutritionists retrieved successfully.',
+  })
+  @ApiResponse({ status: 400, description: 'Bad request.' })
+  async getAll(): Promise<HttpResponse<Nutritionist[]>> {
+    const nutritionists = await this.findAll.execute();
+    return {
+      data: nutritionists,
+      message: 'All nutritionists retrieved successfully.',
+    };
+  }
 
   @Post('login')
   @ApiOperation({ summary: 'Login Nutritionist' })

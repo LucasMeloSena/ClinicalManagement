@@ -11,3 +11,8 @@ Itens a serem acrescentados:
 - Testes unitários e de integração
 - Continuos Integration
 - Reativação de cliente
+- Tabela de usuario
+- Paginação
+- Validar cpf
+- Página de Estástica
+- Confirmação do usuário
