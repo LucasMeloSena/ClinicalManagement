@@ -11,6 +11,9 @@ import { FindAllConsultations } from 'src/domain/use-cases/consultation/find-all
 import { DateProvider } from 'src/utils/dates';
 import { ConsultationController } from 'src/controllers/consultation';
 import { FindConsultationByid } from 'src/domain/use-cases/consultation/find-by-id';
+import { UpdateConsultation } from 'src/domain/use-cases/consultation/update';
+import { DeleteConsultation } from 'src/domain/use-cases/consultation/delete';
+import { ValidateConsultationTimeProvider } from 'src/utils/validate-consultation-time';
 
 @Module({
   controllers: [ConsultationController],
@@ -28,7 +31,10 @@ import { FindConsultationByid } from 'src/domain/use-cases/consultation/find-by-
     CreateConsultation,
     FindConsultationByid,
     FindAllConsultations,
+    UpdateConsultation,
+    DeleteConsultation,
     DateProvider,
+    ValidateConsultationTimeProvider,
   ],
   exports: ['IConsultationRepository'],
 })

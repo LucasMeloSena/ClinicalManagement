@@ -1,7 +1,8 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import { Model } from 'mongoose';
 import { CreateConsultationDto } from 'src/domain/dtos/consultation/create-consultation.dto';
+import { UpdateConsultationDto } from 'src/domain/dtos/consultation/update-consultation.dto';
 import { IConsultationRepository } from 'src/domain/interfaces/consultation.repository';
 import {
   Consultation,
@@ -15,12 +16,17 @@ export class MongooseConsultationRepository implements IConsultationRepository {
     @InjectModel(ConsultationSchema.name)
     private consultationModel: Model<ConsultationSchema>,
   ) {}
-
   async findById(id: string): Promise<Consultation> {
     try {
-      return this.consultationModel.findById<ConsultationDocument>(id).populate('client').populate('nutritionist')
+      return this.consultationModel
+        .findById<ConsultationDocument>(id)
+        .populate('client')
+        .populate('nutritionist')
+        .lean();
     } catch (error) {
-      throw new InternalServerErrorException(`Error retrieving consultation with id ${id}`)
+      throw new InternalServerErrorException(
+        `Error retrieving consultation with id ${id}`,
+      );
     }
   }
 
@@ -31,15 +37,16 @@ export class MongooseConsultationRepository implements IConsultationRepository {
       if (client) filtersNonNull.client = client;
       if (nutritionist) filtersNonNull.nutritionist = nutritionist;
 
-      const consultations =
-        await this.consultationModel.find<ConsultationDocument>(filtersNonNull).populate('client').populate('nutritionist').exec();
+      const consultations = await this.consultationModel
+        .find<ConsultationDocument>(filtersNonNull)
+        .populate('client')
+        .populate('nutritionist')
+        .exec();
       return consultations;
     } catch (error) {
       throw new InternalServerErrorException('Error retrieving consultations');
     }
   }
-
-  // async findById(id: string): Promise<Consultation> {}
 
   async create(consultationDto: CreateConsultationDto): Promise<Consultation> {
     try {
@@ -49,12 +56,26 @@ export class MongooseConsultationRepository implements IConsultationRepository {
         );
       return createdConsultation;
     } catch (error) {
-      console.log((error as Error).message);
       throw new InternalServerErrorException('Error creating consultation.');
     }
   }
 
-  // async update(consultation: Consultation): Promise<Consultation> {}
+  async update(consultation: UpdateConsultationDto): Promise<Consultation> {
+    try {
+      return await this.consultationModel.findByIdAndUpdate(
+        consultation.id,
+        consultation,
+      );
+    } catch (error) {
+      throw new InternalServerErrorException('Error updating consultation');
+    }
+  }
 
-  // async delete(id: string): Promise<void> {}
+  async delete(id: string): Promise<void> {
+    try {
+      await this.consultationModel.findByIdAndDelete(id);
+    } catch (error) {
+      throw new InternalServerErrorException('Erro deleting consultation');
+    }
+  }
 }
