@@ -27,6 +27,9 @@ export class ConsultationSchema implements Consultation {
   @Prop({ required: true })
   endAt: Date;
 
+  @Prop()
+  intervalOfDaysToRepeat?: number;
+
   _id?: string;
 }
 

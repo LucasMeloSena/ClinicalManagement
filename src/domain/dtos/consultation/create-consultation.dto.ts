@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDate, IsNotEmpty } from 'class-validator';
+import { IsDate, IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
 import { Consultation } from '../../models/Consultation';
 import { Transform } from 'class-transformer';
 
@@ -31,4 +31,11 @@ export class CreateConsultationDto implements Consultation {
   @Transform(({ value }) => new Date(value))
   @IsNotEmpty()
   endAt: Date;
+
+  @ApiProperty({
+    description: 'The interval of days to repeat',
+  })
+  @IsNumber()
+  @IsOptional()
+  intervalOfDaysToRepeat?: number;
 }
