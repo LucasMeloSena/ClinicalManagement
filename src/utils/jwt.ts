@@ -1,16 +1,17 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { PassportStrategy } from '@nestjs/passport';
-import { ExtractJwt, Strategy } from 'passport-jwt';
-import { IClientRepository } from 'src/domain/interfaces/client.repository';
 
 interface JwtProviderProps {
   sub: string;
   email: string;
 }
 
-export class JwtProvider extends PassportStrategy(Strategy) {
-  constructor(private readonly clientRepository: IClientRepository) {
+import { Injectable } from '@nestjs/common';
+import { PassportStrategy } from '@nestjs/passport';
+import { ExtractJwt, Strategy } from 'passport-jwt';
+
+@Injectable()
+export class JwtStrategy extends PassportStrategy(Strategy) {
+  constructor() {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
@@ -19,12 +20,7 @@ export class JwtProvider extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: JwtProviderProps) {
-    try {
-      const client = await this.clientRepository.findById(payload.sub);
-      return client;
-    } catch (_) {
-      throw new UnauthorizedException('Invalid jwt token.');
-    }
+    return { id: payload.sub, email: payload.email };
   }
 }
 
@@ -34,7 +30,9 @@ export class JwtAuthToken {
 
   genToken(email: string, id: string | number): Record<string, string> {
     const payload = { email: email, sub: id };
-    const auth = this.jwtService?.sign(payload);
+    const auth = this.jwtService.sign(payload, {
+      expiresIn: process.env.JWT_EXPIRESIN,
+    });
     return {
       auth,
       expiresIn: process.env.JWT_EXPIRESIN,

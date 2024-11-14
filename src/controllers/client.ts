@@ -1,4 +1,15 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+  Put,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import {
   ApiOperation,
   ApiParam,
@@ -12,6 +23,9 @@ import { FindAllClients } from '../domain/use-cases/client/find-all';
 import { CreateClientDto } from '../domain/dtos/client/create-client.dto';
 import { Client } from '../domain/models/Client';
 import { FindClientById } from 'src/domain/use-cases/client/find-by-id';
+import { UpdateClientDto } from 'src/domain/dtos/client/update-client.dto';
+import { DeleteClient } from 'src/domain/use-cases/client/delete';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('client')
 @Controller('client')
@@ -21,8 +35,10 @@ export class ClientController {
     private readonly findById: FindClientById,
     private readonly create: CreateClient,
     private readonly update: UpdateClient,
+    private readonly deleteClient: DeleteClient,
   ) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Get()
   @ApiOperation({ summary: 'Get all clients' })
   @ApiResponse({
@@ -71,7 +87,7 @@ export class ClientController {
       email,
       phone,
       cpf,
-      deleted_at: deletedAt,
+      deletedAt,
     };
     const clients = await this.findAll.execute(filters);
     return {
@@ -80,6 +96,7 @@ export class ClientController {
     };
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   @ApiOperation({ summary: 'Get client by id' })
   @ApiParam({ name: 'id', type: String })
@@ -95,6 +112,7 @@ export class ClientController {
     };
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post()
   @ApiOperation({ summary: 'Create new client' })
   @ApiResponse({
@@ -110,5 +128,39 @@ export class ClientController {
       message: 'Client registered successfully.',
       data: createdClient,
     };
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Put(':id')
+  @ApiOperation({ summary: 'Update client data' })
+  @ApiResponse({
+    status: 200,
+    description: 'Client successfully updated.',
+  })
+  @ApiResponse({ status: 400, description: 'Bad request.' })
+  async updateClient(
+    @Param('id') id: string,
+    @Body() client: UpdateClientDto,
+  ): Promise<HttpResponse<Client>> {
+    client.id = id;
+    const updatedClient = await this.update.execute(client);
+    return {
+      message: 'Client updated successfully.',
+      data: updatedClient,
+    };
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Delete(':id')
+  @ApiOperation({ summary: 'Delete a client' })
+  @ApiResponse({
+    status: 204,
+    description: 'Client deleted successfully.',
+  })
+  @ApiResponse({ status: 404, description: 'Resource not found' })
+  @ApiParam({ name: 'id', description: 'Client id' })
+  @HttpCode(204)
+  async delete(@Param('id') id: string): Promise<void> {
+    await this.deleteClient.execute(id);
   }
 }

@@ -9,6 +9,7 @@ export class Client {
   birthDate: Date;
   cpf: string;
   bodyBiotype: BodyBiotype;
+  deletedAt?: Date;
 }
 
 export enum BodyBiotype {
@@ -40,7 +41,7 @@ export class ClientSchema implements Client {
   bodyBiotype: BodyBiotype;
 
   @Prop()
-  deleted_at?: Date;
+  deletedAt?: Date;
 
   _id?: string;
 }

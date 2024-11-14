@@ -6,7 +6,7 @@ import { BodyBiotype, Client } from 'src/domain/models/Client';
 export class CreateClientDto implements Client {
   @ApiProperty({
     type: 'string',
-    description: 'Patient Name',
+    description: 'Client Name',
   })
   @IsString()
   @IsNotEmpty()
@@ -14,7 +14,7 @@ export class CreateClientDto implements Client {
 
   @ApiProperty({
     type: 'string',
-    description: 'Patient Email',
+    description: 'Client Email',
   })
   @IsString()
   @IsEmail()
@@ -23,7 +23,7 @@ export class CreateClientDto implements Client {
 
   @ApiProperty({
     type: 'string',
-    description: 'Patient Phone',
+    description: 'Client Phone',
   })
   @IsString()
   @IsNotEmpty()
@@ -31,7 +31,7 @@ export class CreateClientDto implements Client {
   phone: string;
 
   @ApiProperty({
-    description: 'Patient Birth Date',
+    description: 'Client Birth Date',
   })
   @IsDate()
   @Transform(({ value }) => new Date(value))
@@ -40,7 +40,7 @@ export class CreateClientDto implements Client {
 
   @ApiProperty({
     type: 'string',
-    description: 'Patient CPF',
+    description: 'Client CPF',
   })
   @IsString()
   @IsNotEmpty()
@@ -48,7 +48,7 @@ export class CreateClientDto implements Client {
   cpf: string;
 
   @ApiProperty({
-    description: 'Patient Body Biotype',
+    description: 'Client Body Biotype',
   })
   @IsNotEmpty()
   @IsString()

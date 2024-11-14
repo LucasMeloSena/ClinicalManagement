@@ -16,3 +16,6 @@ Itens a serem acrescentados:
 - Validar cpf
 - Página de Estástica
 - Confirmação do usuário
+- Adicionar rollback caso o cadastro de consulta com repetição falhe
+- Reativar cliente
+- Filtros de pesquisa

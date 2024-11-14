@@ -1,4 +1,12 @@
-import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { LoginNutritionistDto } from 'src/domain/dtos/nutritionist/login-nutritionist.dto';
 import { Nutritionist } from 'src/domain/models/Nutritionist';
@@ -13,6 +21,7 @@ export class NutritionistController {
     private readonly findAll: FindAllNutritionists,
   ) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Get()
   @ApiOperation({ summary: 'Find All Nutritionists' })
   @ApiResponse({

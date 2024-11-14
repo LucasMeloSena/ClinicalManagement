@@ -14,6 +14,7 @@ import { FindConsultationByid } from 'src/domain/use-cases/consultation/find-by-
 import { UpdateConsultation } from 'src/domain/use-cases/consultation/update';
 import { DeleteConsultation } from 'src/domain/use-cases/consultation/delete';
 import { ValidateConsultationTimeProvider } from 'src/utils/validate-consultation-time';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   controllers: [ConsultationController],
@@ -22,6 +23,7 @@ import { ValidateConsultationTimeProvider } from 'src/utils/validate-consultatio
       { name: ConsultationSchema.name, schema: ConsultationSchemaFactory },
       { name: ClientSchema.name, schema: ClientSchemaFactory },
     ]),
+    PassportModule,
   ],
   providers: [
     {

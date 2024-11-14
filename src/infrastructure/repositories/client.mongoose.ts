@@ -26,7 +26,7 @@ export class MongooseClientRepository implements IClientRepository {
 
   async findAll(filters: ClientFilters): Promise<Client[]> {
     try {
-      const { name, email, phone, cpf, deleted_at } = filters;
+      const { name, email, phone, cpf } = filters;
       const filtersNonNull: ClientFilters = {};
       if (name) filtersNonNull.name = name;
       if (email) filtersNonNull.email = email;
@@ -35,7 +35,6 @@ export class MongooseClientRepository implements IClientRepository {
 
       const clients = await this.clientModel.find<ClientDocument>({
         ...filtersNonNull,
-        deleted_at: deleted_at ? deleted_at : undefined,
       });
 
       return clients;
@@ -70,7 +69,7 @@ export class MongooseClientRepository implements IClientRepository {
   async delete(id: string): Promise<void> {
     try {
       await this.clientModel.findByIdAndUpdate<ClientDocument>(id, {
-        deleted_at: new Date(),
+        deletedAt: new Date(),
       });
     } catch (error) {
       throw new InternalServerErrorException('Error deleting client.');

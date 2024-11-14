@@ -8,7 +8,9 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import {
   ApiOperation,
   ApiParam,
@@ -36,6 +38,7 @@ export class ConsultationController {
     private readonly deleteConsultation: DeleteConsultation,
   ) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Get()
   @ApiOperation({ summary: 'Get all consultations' })
   @ApiResponse({
@@ -69,6 +72,7 @@ export class ConsultationController {
     };
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   @ApiOperation({ summary: 'Get consultation by id' })
   @ApiParam({ name: 'id', type: String })
@@ -87,6 +91,7 @@ export class ConsultationController {
     };
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post()
   @ApiOperation({ summary: 'Create new consultation' })
   @ApiResponse({
@@ -106,6 +111,7 @@ export class ConsultationController {
     };
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Put(':id')
   @ApiOperation({ summary: 'Update consultation data' })
   @ApiResponse({
@@ -125,6 +131,7 @@ export class ConsultationController {
     };
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a consultation' })
   @ApiResponse({
