@@ -30,8 +30,8 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  const port = process.env.PORT || 3000;
-  const host = process.env.HOST || 'localhost';
+  const port = process.env.PORT || 3001;
+  const host = process.env.HOST;
 
   app.useGlobalPipes(
     new ValidationPipe({
