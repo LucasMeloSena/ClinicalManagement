@@ -10,7 +10,8 @@ Backend application using Nest for clinics manage their appointments
 4. A depender do seu S.O os scripts `yarn build:docker` e `yarn start:docker` devem ser adaptados
 5. Execute o comando `yarn build:docker`
 6. Execute o comando `yarn start:docker`
-7. A url de acesso do backend será `http://localhost:3001`
+7. A url de acesso do backend será `http://0.0.0.0:3001`
+8. A url de acesso a documentação do `Swagger` é `http://0.0.0.0:3001/api`
 
 # 💡 Por que o CRUD de clientes foi adicionado?
 
