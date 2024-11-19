@@ -21,7 +21,7 @@
     "test:watch": "vitest --dir src/domain/use-cases",
     "test:coverage": "vitest run --dir src/domain/use-cases --coverage",
     "start:database": "docker compose up -d",
-    "build:docker": "sudo docker build -t clinic .",
+    "build:docker": "sudo docker build --build-arg CLIENT_URL=http://0.0.0.0:3000 --build-arg PORT=3001 --build-arg HOST=0.0.0.0 --build-arg DATABASE_URL=mongodb://host.docker.internal:27017/clinic --build-arg JWT_SECRET=secret --build-arg JWT_EXPIRESIN=1h -t clinic .",
     "start:docker": "yarn start:database && sudo docker run -p 3001:3001 -it clinic"
   },
   "dependencies": {
