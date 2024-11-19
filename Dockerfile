@@ -7,16 +7,25 @@ RUN yarn install --frozen-lockfile
 
 COPY . .
 
+ARG CLIENT_URL
+ARG PORT
+ARG HOST
+ARG DATABASE_URL
+ARG JWT_SECRET
+ARG JWT_EXPIRESIN
+
+ENV CLIENT_URL=$CLIENT_URL
+ENV PORT=$PORT
+ENV HOST=$HOST
+ENV DATABASE_URL=$DATABASE_URL
+ENV JWT_SECRET=$JWT_SECRET
+ENV JWT_EXPIRESIN=$JWT_EXPIRESIN
+
 RUN yarn build
 
-COPY .env /app/.env
-COPY entrypoint.sh .
 COPY start.sh .
 
-RUN chmod +x entrypoint.sh
 RUN chmod +x ./start.sh
-
-ENTRYPOINT ["./entrypoint.sh"]
 
 EXPOSE 3001
 CMD ["./start.sh"]

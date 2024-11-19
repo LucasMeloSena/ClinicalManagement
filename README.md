@@ -21,10 +21,7 @@ Ao criar uma nova consulta a inserção de um cliente é sempre necessária. Log
 
 - Validações extras
 - Testes unitários e de integração
-- Continuos Integration
 - Reativação de cliente
-- Tabela de usuario
 - Paginação na tela de usuários
-- Página de Estatística
-- Ao cadastrar uma consulta recorrente adicionar um rollback no processo caso, algum registro falhe
+- Ao cadastrar uma consulta recorrente adicionar um rollback no processo caso, algum um registro falhe
 - Filtros para pesquisa
