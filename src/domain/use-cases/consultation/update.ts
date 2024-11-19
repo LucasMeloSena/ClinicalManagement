@@ -8,10 +8,13 @@ export class UpdateConsultation {
   constructor(
     @Inject('IConsultationRepository')
     private readonly consultationRepository: IConsultationRepository,
+    @Inject('ConsultationValidator')
     private readonly validatorProvider: ValidateConsultationTimeProvider,
   ) {}
 
   async execute(consultation: UpdateConsultationDto) {
+    await this.consultationRepository.findById(consultation.id);
+
     if (consultation.startAt || consultation.endAt) {
       const foundConsultation = await this.consultationRepository.findById(
         consultation.id,
