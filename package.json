@@ -17,11 +17,9 @@
     "lint:eslint:fix": "eslint . --fix",
     "lint:prettier:check": "prettier --check .",
     "lint:prettier:fix": "prettier --write .",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test": "vitest run --dir src/domain/use-cases",
+    "test:watch": "vitest --dir src/domain/use-cases",
+    "test:coverage": "vitest run --dir src/domain/use-cases --coverage",
     "start:database": "docker compose up -d",
     "build:docker": "sudo docker build -t clinic .",
     "start:docker": "yarn start:database && sudo docker run -p 3001:3001 -it clinic"
@@ -59,6 +57,7 @@
     "@types/supertest": "^6.0.0",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.0.0",
+    "@vitest/coverage-v8": "^2.1.5",
     "eslint": "^8.42.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
@@ -70,23 +69,9 @@
     "ts-loader": "^9.4.3",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.1.3"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": "src",
-    "testRegex": ".*\\.spec\\.ts$",
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "collectCoverageFrom": [
-      "**/*.(t|j)s"
-    ],
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "typescript": "^5.1.3",
+    "vite": "^5.4.11",
+    "vite-tsconfig-paths": "^5.1.2",
+    "vitest": "^2.1.5"
   }
 }

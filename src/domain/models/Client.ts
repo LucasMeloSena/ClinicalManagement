@@ -22,25 +22,37 @@ export type ClientDocument = HydratedDocument<ClientSchema>;
 
 @Schema({ collection: 'clients', timestamps: true })
 export class ClientSchema implements Client {
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   name: string;
 
-  @Prop({ required: true, unique: true })
+  @Prop({ type: String, required: true, unique: true })
   email: string;
 
-  @Prop({ required: true, unique: true, minlength: 11, maxlength: 11 })
+  @Prop({
+    type: String,
+    required: true,
+    unique: true,
+    minlength: 11,
+    maxlength: 11,
+  })
   phone: string;
 
-  @Prop({ required: true })
+  @Prop({ type: Date, required: true })
   birthDate: Date;
 
-  @Prop({ required: true, unique: true, minlength: 11, maxlength: 11 })
+  @Prop({
+    type: String,
+    required: true,
+    unique: true,
+    minlength: 11,
+    maxlength: 11,
+  })
   cpf: string;
 
-  @Prop({ required: true, enum: BodyBiotype })
+  @Prop({ type: String, required: true, enum: Object.values(BodyBiotype) })
   bodyBiotype: BodyBiotype;
 
-  @Prop()
+  @Prop({ type: Date })
   deletedAt?: Date;
 
   _id?: string;
