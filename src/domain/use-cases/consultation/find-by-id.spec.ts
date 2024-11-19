@@ -10,7 +10,7 @@ import { DateProvider } from 'src/utils/dates';
 import { FindConsultationByid } from './find-by-id';
 import { randomUUID } from 'crypto';
 
-describe('Find Consultations By Id', () => {
+describe('Find Consultation By Id', () => {
   let findConsultationById: FindConsultationByid;
 
   beforeEach(async () => {
