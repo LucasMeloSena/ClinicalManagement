@@ -15,12 +15,12 @@ Backend application using Nest for clinics manage their appointments
 
 # 💡 Por que o CRUD de clientes foi adicionado?
 
-Ao criar uma nova consulta a inserção de um cliente é sempre necessária. Logo, é comum que mais de uma consulta para um mesmo cliente. A fim, de evitar o retrabalho de digitar todas as informações do cliente novamente a cada nova consulta e um volume de dados repetidos no banco de dados, esta feature foi desenvolvida.
+Ao criar uma nova consulta a inserção de um cliente é sempre necessária. Logo, é comum mais de uma consulta para um mesmo cliente. A fim, de evitar o retrabalho de digitar todas as informações do cliente novamente a cada nova consulta e um alto volume de dados repetidos no banco de dados, esta feature foi desenvolvida.
 
 # ✅ Itens válidos a serem acrescentados:
 
 - Validações extras
-- Testes unitários e de integração
+- Testes de integração
 - Reativação de cliente
 - Paginação na tela de usuários
 - Ao cadastrar uma consulta recorrente adicionar um rollback no processo caso, algum um registro falhe
