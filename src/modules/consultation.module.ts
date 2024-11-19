@@ -30,13 +30,16 @@ import { PassportModule } from '@nestjs/passport';
       provide: 'IConsultationRepository',
       useClass: MongooseConsultationRepository,
     },
+    {
+      provide: 'ConsultationValidator',
+      useClass: ValidateConsultationTimeProvider,
+    },
     CreateConsultation,
     FindConsultationByid,
     FindAllConsultations,
     UpdateConsultation,
     DeleteConsultation,
     DateProvider,
-    ValidateConsultationTimeProvider,
   ],
   exports: ['IConsultationRepository'],
 })

@@ -21,13 +21,13 @@ export class ConsultationSchema implements Consultation {
   @Prop({ type: Types.ObjectId, ref: 'NutritionistSchema' })
   nutritionist: Nutritionist | Types.ObjectId | string;
 
-  @Prop({ required: true })
+  @Prop({ type: Date, required: true })
   startAt: Date;
 
-  @Prop({ required: true })
+  @Prop({ type: Date, required: true })
   endAt: Date;
 
-  @Prop()
+  @Prop({ type: Number })
   intervalOfDaysToRepeat?: number;
 
   _id?: string;

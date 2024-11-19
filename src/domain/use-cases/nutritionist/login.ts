@@ -9,7 +9,9 @@ export class LoginNutritionist {
   constructor(
     @Inject('INutritionistRepository')
     private readonly nutritionistRepository: INutritionistRepository,
+    @Inject('HashProvider')
     private readonly hashProvider: HashProvider,
+    @Inject('JwtAuthToken')
     private readonly authProvider: JwtAuthToken,
   ) {}
 

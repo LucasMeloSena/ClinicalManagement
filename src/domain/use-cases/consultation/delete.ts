@@ -9,6 +9,7 @@ export class DeleteConsultation {
   ) {}
 
   async execute(id: string) {
+    await this.consultationRepository.findById(id);
     await this.consultationRepository.delete(id);
   }
 }

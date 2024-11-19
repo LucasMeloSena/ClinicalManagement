@@ -9,6 +9,7 @@ export class CreateConsultation {
   constructor(
     @Inject('IConsultationRepository')
     private readonly consultationRepository: IConsultationRepository,
+    @Inject('ConsultationValidator')
     private readonly validatorProvider: ValidateConsultationTimeProvider,
   ) {}
 

@@ -37,8 +37,14 @@ import { PassportModule } from '@nestjs/passport';
       provide: 'INutritionistRepository',
       useClass: MongooseNutritionistRepository,
     },
-    HashProvider,
-    JwtAuthToken,
+    {
+      provide: 'HashProvider',
+      useClass: HashProvider,
+    },
+    {
+      provide: 'JwtAuthToken',
+      useClass: JwtAuthToken,
+    },
     JwtStrategy,
     LoginNutritionist,
     FindAllNutritionists,
